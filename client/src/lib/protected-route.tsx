@@ -1,6 +1,7 @@
-import { useAuth } from "@/hooks/use-auth";
 import { Loader2 } from "lucide-react";
 import { Redirect, Route } from "wouter";
+import { useContext } from "react";
+import { AuthContext } from "@/hooks/use-auth";
 
 export function ProtectedRoute({
   path,
@@ -9,29 +10,38 @@ export function ProtectedRoute({
   path: string;
   component: (props: any) => React.JSX.Element;
 }) {
-  const { user, isLoading } = useAuth();
-
-  if (isLoading) {
-    return (
-      <Route path={path}>
-        <div className="flex items-center justify-center min-h-screen">
-          <Loader2 className="h-8 w-8 animate-spin text-primary" />
-        </div>
-      </Route>
-    );
-  }
-
-  if (!user) {
-    return (
-      <Route path={path}>
-        <Redirect to="/auth" />
-      </Route>
-    );
-  }
-
+  // Use useContext directly to avoid throwing errors if the context is not available
+  const authContext = useContext(AuthContext);
+  
   return (
     <Route path={path}>
-      {(params) => <Component {...params} />}
+      {(params) => {
+        // If no auth context, show loading
+        if (!authContext) {
+          return (
+            <div className="flex items-center justify-center min-h-screen">
+              <Loader2 className="h-8 w-8 animate-spin text-primary" />
+            </div>
+          );
+        }
+        
+        // If loading auth state, show loading
+        if (authContext.isLoading) {
+          return (
+            <div className="flex items-center justify-center min-h-screen">
+              <Loader2 className="h-8 w-8 animate-spin text-primary" />
+            </div>
+          );
+        }
+        
+        // If not authenticated, redirect to auth page
+        if (!authContext.user) {
+          return <Redirect to="/auth" />;
+        }
+        
+        // If authenticated, render the component
+        return <Component {...params} />;
+      }}
     </Route>
   );
 }

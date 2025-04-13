@@ -1,9 +1,10 @@
+import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useTranslation } from "react-i18next";
 import { Redirect } from "wouter";
-import { useAuth } from "@/hooks/use-auth";
+import { AuthContext } from "@/hooks/use-auth";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -20,7 +21,6 @@ import {
   CardHeader,
   CardTitle,
   CardDescription,
-  CardFooter,
 } from "@/components/ui/card";
 import {
   Tabs,
@@ -62,7 +62,20 @@ type RegisterData = z.infer<typeof registerSchema>;
 
 export default function AuthPage() {
   const { t } = useTranslation();
-  const { user, loginMutation, registerMutation } = useAuth();
+  
+  // Use useContext to access auth context
+  const authContext = useContext(AuthContext);
+  
+  // If the auth context isn't available yet, show loading state
+  if (!authContext) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+      </div>
+    );
+  }
+  
+  const { user, loginMutation, registerMutation } = authContext;
   
   // If user is already logged in, redirect to dashboard
   if (user) {
