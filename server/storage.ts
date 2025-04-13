@@ -39,7 +39,8 @@ import { format } from "date-fns";
 import session from "express-session";
 import connectPg from "connect-pg-simple";
 
-const PostgresSessionStore = connectPg(session);
+// Explicitly typed for clarity
+const PostgresSessionStore = connectPg(session) as any;
 
 export interface IStorage {
   // User methods
@@ -115,11 +116,11 @@ export interface IStorage {
   getRecentTransactions(limit: number): Promise<any[]>;
   
   // Session store
-  sessionStore: session.SessionStore;
+  sessionStore: any;
 }
 
 export class DatabaseStorage implements IStorage {
-  sessionStore: session.SessionStore;
+  sessionStore: any;
   
   constructor() {
     this.sessionStore = new PostgresSessionStore({ 

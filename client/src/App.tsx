@@ -27,57 +27,113 @@ import ProfilePage from "@/pages/profile";
 function Router() {
   return (
     <Switch>
-      <Route path="/auth" component={AuthPage} />
+      <Route path="/auth">
+        <AuthPage />
+      </Route>
       
       {/* Dashboard */}
-      <ProtectedRoute path="/" component={Dashboard} />
+      <Route path="/" exact>
+        <ProtectedRoute path="/" component={Dashboard} />
+      </Route>
       
       {/* Master Data Management */}
-      <ProtectedRoute path="/products" component={ProductsPage} />
-      <ProtectedRoute path="/products/add" component={AddProductPage} />
-      <ProtectedRoute path="/products/edit/:id" component={AddProductPage} />
+      <Route path="/products" exact>
+        <ProtectedRoute path="/products" component={ProductsPage} />
+      </Route>
+      <Route path="/products/add">
+        <ProtectedRoute path="/products/add" component={AddProductPage} />
+      </Route>
+      <Route path="/products/edit/:id">
+        <ProtectedRoute path="/products/edit/:id" component={AddProductPage} />
+      </Route>
       
-      <ProtectedRoute path="/customers" component={CustomersPage} />
-      <ProtectedRoute path="/customers/add" component={AddCustomerPage} />
-      <ProtectedRoute path="/customers/edit/:id" component={AddCustomerPage} />
+      <Route path="/customers" exact>
+        <ProtectedRoute path="/customers" component={CustomersPage} />
+      </Route>
+      <Route path="/customers/add">
+        <ProtectedRoute path="/customers/add" component={AddCustomerPage} />
+      </Route>
+      <Route path="/customers/edit/:id">
+        <ProtectedRoute path="/customers/edit/:id" component={AddCustomerPage} />
+      </Route>
       
-      <ProtectedRoute path="/vendors" component={VendorsPage} />
-      <ProtectedRoute path="/vendors/add" component={AddVendorPage} />
-      <ProtectedRoute path="/vendors/edit/:id" component={AddVendorPage} />
+      <Route path="/vendors" exact>
+        <ProtectedRoute path="/vendors" component={VendorsPage} />
+      </Route>
+      <Route path="/vendors/add">
+        <ProtectedRoute path="/vendors/add" component={AddVendorPage} />
+      </Route>
+      <Route path="/vendors/edit/:id">
+        <ProtectedRoute path="/vendors/edit/:id" component={AddVendorPage} />
+      </Route>
       
       {/* Transactions */}
-      <ProtectedRoute path="/purchase-orders" component={PurchaseOrdersPage} />
-      <ProtectedRoute path="/purchase-orders/add" component={AddPurchasePage} />
-      <ProtectedRoute path="/purchase-orders/:id" component={AddPurchasePage} />
+      <Route path="/purchase-orders" exact>
+        <ProtectedRoute path="/purchase-orders" component={PurchaseOrdersPage} />
+      </Route>
+      <Route path="/purchase-orders/add">
+        <ProtectedRoute path="/purchase-orders/add" component={AddPurchasePage} />
+      </Route>
+      <Route path="/purchase-orders/:id">
+        <ProtectedRoute path="/purchase-orders/:id" component={AddPurchasePage} />
+      </Route>
       
-      <ProtectedRoute path="/sales-orders" component={SalesOrdersPage} />
-      <ProtectedRoute path="/sales-orders/add" component={AddSalePage} />
-      <ProtectedRoute path="/sales-orders/:id" component={AddSalePage} />
+      <Route path="/sales-orders" exact>
+        <ProtectedRoute path="/sales-orders" component={SalesOrdersPage} />
+      </Route>
+      <Route path="/sales-orders/add">
+        <ProtectedRoute path="/sales-orders/add" component={AddSalePage} />
+      </Route>
+      <Route path="/sales-orders/:id">
+        <ProtectedRoute path="/sales-orders/:id" component={AddSalePage} />
+      </Route>
       
-      <ProtectedRoute path="/returns" component={ReturnsPage} />
-      <ProtectedRoute path="/returns/add" component={AddReturnPage} />
-      <ProtectedRoute path="/returns/:id" component={AddReturnPage} />
+      <Route path="/returns" exact>
+        <ProtectedRoute path="/returns" component={ReturnsPage} />
+      </Route>
+      <Route path="/returns/add">
+        <ProtectedRoute path="/returns/add" component={AddReturnPage} />
+      </Route>
+      <Route path="/returns/:id">
+        <ProtectedRoute path="/returns/:id" component={AddReturnPage} />
+      </Route>
       
       {/* Reports */}
-      <ProtectedRoute path="/reports/accounts-payable" component={AccountsPayablePage} />
-      <ProtectedRoute path="/reports/accounts-receivable" component={AccountsReceivablePage} />
-      <ProtectedRoute path="/reports/inventory" component={InventoryReportPage} />
-      <ProtectedRoute path="/reports/profit-loss" component={ProfitLossPage} />
-      <ProtectedRoute path="/reports/sales" component={SalesReportPage} />
+      <Route path="/reports/accounts-payable">
+        <ProtectedRoute path="/reports/accounts-payable" component={AccountsPayablePage} />
+      </Route>
+      <Route path="/reports/accounts-receivable">
+        <ProtectedRoute path="/reports/accounts-receivable" component={AccountsReceivablePage} />
+      </Route>
+      <Route path="/reports/inventory">
+        <ProtectedRoute path="/reports/inventory" component={InventoryReportPage} />
+      </Route>
+      <Route path="/reports/profit-loss">
+        <ProtectedRoute path="/reports/profit-loss" component={ProfitLossPage} />
+      </Route>
+      <Route path="/reports/sales">
+        <ProtectedRoute path="/reports/sales" component={SalesReportPage} />
+      </Route>
       
       {/* User Settings */}
-      <ProtectedRoute path="/settings" component={SettingsPage} />
-      <ProtectedRoute path="/profile" component={ProfilePage} />
+      <Route path="/settings">
+        <ProtectedRoute path="/settings" component={SettingsPage} />
+      </Route>
+      <Route path="/profile">
+        <ProtectedRoute path="/profile" component={ProfilePage} />
+      </Route>
       
       {/* Fallback to 404 */}
-      <Route component={NotFound} />
+      <Route>
+        <NotFound />
+      </Route>
     </Switch>
   );
 }
 
 function App() {
   return (
-    <div>
+    <div className="min-h-screen">
       <Router />
       <Toaster />
     </div>
